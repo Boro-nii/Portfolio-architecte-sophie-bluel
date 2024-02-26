@@ -58,6 +58,7 @@ header {
 	justify-content: space-between;
 	margin: 50px 0
 }
+
 section {
 	margin: 50px 0
 }
@@ -98,6 +99,19 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+nav a{
+	text-decoration: none;
+}
+
+nav a:visited{
+	color:black;
+}
+
+nav a:hover{
+	color: #B1663C;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -205,6 +219,51 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+}
+
+/* FORMULAIRE CONNEXION */
+#h2Login{
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+#loginDiv{
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	align-content: center;
+	margin-bottom: 400px;
+}
+
+#loginDiv input{
+	border: none;
+	margin: 5px 0 30px 0;
+	width: 30%;
+	height: 3em;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#loginDiv input[type="submit"]{
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	width: 20%;
+	margin: auto;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
+
+#loginDiv a{
+	margin: auto;
+	margin-top: 5px;
+	color: black;
+}
+
+#loginDiv a:visited{
+	margin: auto;
+	margin-top: 5px;
+	color: black;
 }
 
 footer nav ul {
