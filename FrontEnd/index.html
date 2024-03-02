@@ -10,6 +10,7 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script type="module" src="script/script.js" defer></script> 
+	<script src="https://kit.fontawesome.com/6c51364b12.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -18,7 +19,7 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="connexion.html">login</a></li>
+			<li><a id="navLogin" href="connexion.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -36,7 +37,12 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+			<h2>Mes Projets</h2>
+			<button id="showModalEdit" style="display: none;">
+				<i class="fa-solid fa-pen-to-square"></i>
+				Modifier
+			</button>	
+		</div>
 		<div id="filtres">
 			<button id="tous" class="inUse" >Tous</button>
 			<button id="1">Objets</button>
@@ -59,7 +65,52 @@
 			<input type="submit" value="Envoyer">
 		</form>
 	</section>
-</main>
+</main> 
+
+
+<!-- MODALS -->
+<aside id="modal" class="modalBG">
+	<!-- Modal delete content -->
+	<div class="modalContent" id="modalContentGallery">
+		<button class="modalClose"><i class="fa-solid fa-xmark"></i></button>
+		<h4 id="modalH4">Galerie photo</h4>
+		<div id="modalWorks">
+			<!-- format d'un article -->
+			<!-- <article>
+				<img class="modalImg" src="assets/images/abajour-tahina.png">
+				<button class="modalImgSuppr"><i class="fa-solid fa-trash-can"></i></button>
+			</article> -->
+		</div>
+		<button id="modalAddPhoto">Ajouter une photo</button>
+	</div>
+	<!-- Modale add content -->
+	<div class="modalContent" id="modalContentAddPhoto">
+		<button class="modalClose"><i class="fa-solid fa-xmark"></i></button>
+		<button id="modalBack"><i class="fa-solid fa-arrow-left"></i></button>	
+		<h4 id="modalH4">Ajout photo</h4>
+		<form>
+			<div id="modalForm">
+				<div id="divInputFile">
+					<i class="fa-solid fa-image"></i>
+					<input type="file" accept="image/png, image/jpeg" id="photo">
+					<label for="photo" id="cloneInputFile">+ Ajouter photo</label>
+					<p>jpg, png: 4mo max</p>
+				</div>
+				<div id="divPreview"></div>
+				<label for="titre">Titre</label>
+				<input type="text" id="titre">
+				<label for="categorie">Catégorie</label>
+				<select name="categorie" id="categorie">
+					<option value="1">Objets</option>
+					<option value="2">Appartements</option>
+					<option value="3">Hotels et restaurants</option>
+				</select>
+				<div id="modalFormLine"></div>
+				<button id="modalButtonValider" >Valider</button>
+			</div>
+		</form>
+	</div>
+</aside>
 
 <footer>
 	<nav>

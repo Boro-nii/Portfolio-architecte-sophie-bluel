@@ -10,7 +10,7 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<!-- <script type="module" src="script/script.js" defer></script>  -->
-    <script type="module" src="script/authentification.js"></script>
+    <script type="module" src="script/authentification.js" defer></script>
 </head>
 <body>
     <header>
@@ -29,10 +29,11 @@
         <form>
             <div id="loginDiv">
                 <label for="mail">E-mail</label>
-                <input type="email" name="email" id="mail">
+                <input type="email" name="email" id="mail" value="sophie.bluel@test.tld">
                 <label for="password">Mot de passe</label>
-                <input type="password" name="password" id="password">
-                <input type="submit" value="Se connecter">
+                <input type="password" name="password" id="password" value="S0phie">
+                <input type="submit" value="Se connecter" id="submit">
+                <span id="messageErreur"></span>
                 <a href="#">Mot de passe oublié</a>
             </div>
         </form>
