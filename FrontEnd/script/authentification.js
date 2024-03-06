@@ -30,7 +30,6 @@ buttonSubmit.addEventListener("click",async (event)=>{
     }
     if(reponse.status==200){
         let data = await reponse.json()
-        console.log("TEST")
         window.localStorage.setItem("userId",data.userId)
         window.localStorage.setItem("token",data.token)
         window.location.href="index.html"

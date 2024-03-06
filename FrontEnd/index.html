@@ -13,6 +13,9 @@
 	<script src="https://kit.fontawesome.com/6c51364b12.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<div id="headerEdit">
+	<i class="fa-solid fa-pen-to-square"></i> Mode édition
+</div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
@@ -41,13 +44,13 @@
 			<button id="showModalEdit" style="display: none;">
 				<i class="fa-solid fa-pen-to-square"></i>
 				Modifier
-			</button>	
+			</button>
 		</div>
 		<div id="filtres">
-			<button id="tous" class="inUse" >Tous</button>
-			<button id="1">Objets</button>
-			<button id="2">Appartements</button>
-			<button id="3">Hôtels & restaurants</button>
+			<button class="filtresButton" class="inUse" >Tous</button>
+			<button class="filtresButton" id="1">Objets</button>
+			<button class="filtresButton" id="2">Appartements</button>
+			<button class="filtresButton" id="3">Hôtels & restaurants</button>
 		</div>
 		<div class="gallery">
 		</div>
@@ -88,7 +91,7 @@
 		<button class="modalClose"><i class="fa-solid fa-xmark"></i></button>
 		<button id="modalBack"><i class="fa-solid fa-arrow-left"></i></button>	
 		<h4 id="modalH4">Ajout photo</h4>
-		<form>
+		<form action="">
 			<div id="modalForm">
 				<div id="divInputFile">
 					<i class="fa-solid fa-image"></i>
