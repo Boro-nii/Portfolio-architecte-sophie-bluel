@@ -9,9 +9,11 @@ const works = await work.getWorks()
 
 function isLogged(){
     if(window.localStorage.getItem("token")!==null){
-        // Changement bouton "login" en "logout"
+        // On efface le bouton login et on affiche le bouton logout
         let navLogin = document.getElementById("navLogin")
-        navLogin.innerText="Logout"
+        let navLogout = document.getElementById("navLogout")
+        navLogin.style.display="none"
+        navLogout.style.display="block"
         // On affiche la marge noire en haut
         let headerEdit = document.getElementById("headerEdit")
         headerEdit.style.display="inline"
@@ -80,7 +82,20 @@ modalImgSuppr.forEach(button => button.addEventListener("click", async (event)=>
     await work.deleteWork(button.id)
 }))
 
+const navLogout = document.getElementById("navLogout")
+navLogout.addEventListener("click",(event)=>{
+    event.preventDefault
+    window.localStorage.removeItem("token")
+    window.localStorage.removeItem("userId")
+})
+
+const titre = document.getElementById("titre")
+titre.addEventListener("change",()=>{
+    work.formIsOk
+})
+
 //INITIALISATION
 gallery.renderGallery(works);
 createFilter();
 isLogged()
+

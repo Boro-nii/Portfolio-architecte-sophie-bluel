@@ -14,7 +14,10 @@ export async function deleteWork(workId){
                 Authorization: `Bearer ${window.localStorage.getItem("token")}`,
             },
         })
-        console.log("element supprimé")
+        console.log(reponse)
+        setTimeout(()=>{
+            console.log("fin du timer")
+        },5000)
     }
     
 }
@@ -24,6 +27,10 @@ export async function addWork(){
     let img = document.getElementById("photo").files[0]
     let title = document.getElementById("titre").value 
     let category = document.getElementById("categorie").value
+
+    console.log(img)
+    console.log(title)
+    console.log(category)
 
     let formData = new FormData()
     formData.append("image",img)
@@ -36,7 +43,13 @@ export async function addWork(){
             Authorization: `Bearer ${window.localStorage.getItem("token")}`, 
         },
         body: formData
-    })
-    console.log("element ajouté")
+    })   
+    console.log(reponse)
 }
 
+export function formIsOk(){
+    let img = document.getElementById("photo").files[0]
+    let title = document.getElementById("titre").value 
+    console.log("image :")
+    console.log(img)
+}
