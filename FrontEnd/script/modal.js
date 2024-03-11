@@ -8,16 +8,12 @@ export function openModal(){
     modalBG.style.display = "flex"
     modalContentGallery.style.display = "flex"
     modalContentAddPhoto.style.display = "none"
-
-    console.log("modal ouverte !")
 }
 
 export function openAddPhoto(){
 
     modalContentGallery.style.display = "none"
     modalContentAddPhoto.style.display = "flex"
-
-    console.log("accès à l'ajout de photo !")
 }
 
 export function closeModal(){
@@ -25,8 +21,6 @@ export function closeModal(){
     modalBG.style.display = "none"
     modalContentGallery.style.display = "none"
     modalContentAddPhoto.style.display = "none"
-
-    console.log("modal fermée !")
 }
 
 export function createGalleryEdit(works){
@@ -42,4 +36,59 @@ export function createGalleryEdit(works){
         </article>`
         modalWorks.innerHTML += article
     })
+}
+
+export function createPreview(){
+    let img = document.getElementById("photo").files[0];
+
+    let divInputFile = document.getElementById("divInputFile")
+    let divInputFileI = document.getElementById("divInputFileI")
+    let cloneInputFile = document.getElementById("cloneInputFile")
+    let divInputFileP = document.getElementById("divInputFileP")
+
+    divInputFileI.style.display="none"
+    divInputFileP.style.display="none"
+
+    cloneInputFile.innerText=""
+
+    let preview = document.createElement("img")
+    preview.src = URL.createObjectURL(img)
+    preview.alt = img.name
+
+    cloneInputFile.appendChild(preview)
+    cloneInputFile.classList.remove("labelInputFile")
+
+    divInputFile.style.padding = "0 10px"
+}
+
+export function erasePreview(){
+    let divInputFile = document.getElementById("divInputFile")
+
+    let divInputFileI = document.getElementById("divInputFileI")
+    let cloneInputFile = document.getElementById("cloneInputFile")
+    let divInputFileP = document.getElementById("divInputFileP")
+
+    cloneInputFile.innerHTML = ""
+    cloneInputFile.innerText = "+ Ajouter photo"
+    cloneInputFile.classList.add("labelInputFile")
+    
+    divInputFileI.style.display="block"
+    divInputFileP.style.display="block"
+
+    divInputFile.style.padding = "10px"
+
+}
+
+export function formIsOk(){
+    let modalButtonValider = document.getElementById("modalButtonValider");
+    let img = document.getElementById("photo").files[0];
+    let title = document.getElementById("titre").value;
+    //si img & title sont différent de undefined et ""
+    if(img && title){
+        //on retire l'attribut disabled
+        modalButtonValider.removeAttribute("disabled");
+    }else{
+        //sinon on s'assure qu'il y est
+        modalButtonValider.setAttribute("disabled","")
+    }
 }

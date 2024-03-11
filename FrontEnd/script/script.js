@@ -2,10 +2,7 @@ import * as modal from "./modal.js";
 import * as work from "./work.js";
 import * as gallery from "./gallery.js"
 
-// console.log("token :"+window.localStorage.getItem("token"))
-// console.log("userId :"+window.localStorage.getItem("userId"))
-
-const works = await work.getWorks()
+let works = await work.getWorks()
 
 function isLogged(){
     if(window.localStorage.getItem("token")!==null){
@@ -44,58 +41,102 @@ function createFilter(){
     });
 }
 
+async function modalRefresh(){
+    works = await work.getWorks()
+
+    gallery.renderGallery(works);
+    modal.createGalleryEdit(works);
+
+    let modalImgSuppr = document.querySelectorAll(".modalImgSuppr");
+    modalImgSuppr.forEach(button => button.addEventListener("click", async ()=>{
+        await work.deleteWork(button.id);
+        modalRefresh()
+    }))
+}
+
 //GESTION DES BOUTONS :
 
 modal.createGalleryEdit(works);
 
-const showModalEdit = document.getElementById("showModalEdit")
+const showModalEdit = document.getElementById("showModalEdit");
 showModalEdit.addEventListener("click",()=>{
-    modal.openModal()
+    modal.openModal();
 })
 
-const modalClose = document.querySelectorAll(".modalClose")
+const modalClose = document.querySelectorAll(".modalClose");
 modalClose.forEach(button => {
     button.addEventListener("click",()=>{
-        modal.closeModal()
+        modal.closeModal();
     })
 })
 
-const modalAddPhoto = document.getElementById("modalAddPhoto")
+const modalAddPhoto = document.getElementById("modalAddPhoto");
 modalAddPhoto.addEventListener("click",()=>{
-    modal.openAddPhoto()
+    modal.openAddPhoto();
+
+    document.getElementById("modalForm").reset();
+    modal.erasePreview()
+    const modalFormError = document.getElementById("modalFormError")
+    modalFormError.innerHTML = ""
 })
 
-const modalBack = document.getElementById("modalBack")
+const modalBack = document.getElementById("modalBack");
 modalBack.addEventListener("click",()=>{
-    modal.openModal()
+    modal.openModal();
 })
 
-const modalButtonValider = document.getElementById("modalButtonValider")
-modalButtonValider.addEventListener("click",async (event)=>{
-    event.preventDefault()
-    await work.addWork()
+const modalButtonValider = document.getElementById("modalButtonValider");
+modalButtonValider.addEventListener("click", async (event)=>{
+    event.preventDefault();
+    await work.addWork();
+
+
+    document.getElementById("modalForm").reset();
+    modal.erasePreview()
+    await modalRefresh()
+    modal.formIsOk()
 })
 
-const modalImgSuppr = document.querySelectorAll(".modalImgSuppr")
+const modalImgSuppr = document.querySelectorAll(".modalImgSuppr");
 modalImgSuppr.forEach(button => button.addEventListener("click", async (event)=>{
-    event.preventDefault()
-    await work.deleteWork(button.id)
+    event.preventDefault();
+    await work.deleteWork(button.id);
+    await modalRefresh()
 }))
 
-const navLogout = document.getElementById("navLogout")
+const navLogout = document.getElementById("navLogout");
 navLogout.addEventListener("click",(event)=>{
-    event.preventDefault
-    window.localStorage.removeItem("token")
-    window.localStorage.removeItem("userId")
+    event.preventDefault;
+    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("userId");
 })
 
-const titre = document.getElementById("titre")
-titre.addEventListener("change",()=>{
-    work.formIsOk
+const titre = document.getElementById("titre");
+titre.addEventListener("input",()=>{
+    modal.formIsOk();
 })
+
+const photo = document.getElementById("photo");
+photo.addEventListener("change",()=>{
+    modal.formIsOk();
+    modal.createPreview();
+})
+
+const modalStopPropa = document.querySelectorAll(".js-modalStopPropa");
+modalStopPropa.forEach( div =>
+    div.addEventListener("click",(event)=>{
+        event.stopPropagation();
+    })
+)
+
+const modalBG = document.getElementById("modal");
+modalBG.addEventListener("click",(event)=>{
+    modal.closeModal();
+})
+
+
 
 //INITIALISATION
 gallery.renderGallery(works);
 createFilter();
 isLogged()
-

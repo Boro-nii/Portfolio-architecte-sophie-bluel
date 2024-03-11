@@ -134,10 +134,7 @@ nav a:hover{
 #introduction p {
 	margin-bottom: 0.5em;
 }
-#portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
-}
+
 /* AJOUT CSS FILTRES */
 #filtres{
 	display: flex;
@@ -161,9 +158,6 @@ nav a:hover{
 	background-color: #1D6154;
 	color: white;
 }
-
-
-
 
 .gallery {
 	width: 100%;
@@ -300,7 +294,7 @@ footer nav ul {
 	width: 630px;
 	border-radius: 10px;
 
-	overflow: auto;
+	overflow:auto;
 	max-width: calc(100vw - 20px);
 	max-height: calc(100vh - 20px);
 
@@ -373,7 +367,7 @@ footer nav ul {
 }
 
 .modalImg{
-	width: 82px;
+	width: 80px;
 }
 
 .modalImgSuppr{
@@ -411,7 +405,7 @@ footer nav ul {
 	width: 100%;
 }
 
-#modalForm{
+#modalFormDiv{
 	display: flex;
 	flex-direction: column;
 	margin: 30px 90px 45px;
@@ -442,36 +436,33 @@ footer nav ul {
 	justify-content: center;
 }
 
-#cloneInputFile{
+.labelInputFile{
 	border: none;
 	background-color:#CBD6DC;
 	padding: 5px 30px;
 	border-radius: 30px;
 	color: #306685;
-}
-
-#modalForm input[type="file"]{
-	display: none;
-}
-
-#modalForm label{
 	margin-bottom: 10px;
 }
 
-#modalForm input{
+#modalFormDiv input[type="file"]{
+	display: none;
+}
+
+#modalFormDiv input{
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	height: 50px;
 	margin-bottom: 30px;
 }
 
-#modalForm select{
+#modalFormDiv select{
 	height: 50px;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-#modalFormLine{
+#modalFormDivLine{
 	margin-top: 45px;
 	border-bottom: solid #B3B3B3 1px;
 }
@@ -504,6 +495,16 @@ footer nav ul {
 	display: none;
 }
 
+#portfolioH2{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 90px;
+	margin-bottom: 60px;
+	gap: 20px;
+	padding-left: 70px;
+}
+
 #showModalEdit{
 	border: none;
 	background-color: white;
@@ -513,3 +514,22 @@ footer nav ul {
 #navLogout{
 	display: none;
 }
+
+#modalFormError{
+	border-bottom: solid #A7A7A7 1px;
+	margin-top: 75px;
+	padding-bottom: 10px;
+}
+
+.modalFormError{
+	color: red;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.modalFormValid{
+	color: green;
+	text-align: center;
+	margin-top: 20px;
+}
+
