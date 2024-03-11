@@ -58,6 +58,7 @@ header {
 	justify-content: space-between;
 	margin: 50px 0
 }
+
 section {
 	margin: 50px 0
 }
@@ -88,7 +89,6 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
 nav li {
 	padding: 0 10px;
@@ -98,6 +98,19 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+nav a{
+	text-decoration: none;
+}
+
+nav a:visited{
+	color:black;
+}
+
+nav a:hover{
+	color: #B1663C;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -121,10 +134,7 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-#portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
-}
+
 /* AJOUT CSS FILTRES */
 #filtres{
 	display: flex;
@@ -148,9 +158,6 @@ li:hover {
 	background-color: #1D6154;
 	color: white;
 }
-
-
-
 
 .gallery {
 	width: 100%;
@@ -207,9 +214,322 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+/* FORMULAIRE CONNEXION */
+#h2Login{
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+#loginDiv{
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	align-content: center;
+	margin-bottom: 400px;
+}
+
+#loginDiv input{
+	border: none;
+	margin: 5px 0 30px 0;
+	width: 30%;
+	height: 3em;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#loginDiv input[type="submit"]{
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	width: 20%;
+	margin: auto;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
+
+#loginDiv a{
+	margin: auto;
+	margin-top: 5px;
+	color: black;
+}
+
+#loginDiv a:visited{
+	margin: auto;
+	margin-top: 5px;
+	color: black;
+}
+
+#messageErreur{
+	text-align: center;
+	color: red;
+	font-weight: bold;
+	font-style: italic;
+}
+
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+}
+
+/* MODAL */
+
+.modalBG{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+
+.modalContent{
+	position: relative;
+	background-color: white;
+	width: 630px;
+	border-radius: 10px;
+
+	overflow:auto;
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vh - 20px);
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#modalContentGallery{
+	display: none;
+}
+
+#modalContentAddPhoto{
+	display: none;
+}
+
+.modalClose{
+	position: absolute;
+	top: 20px;
+	right: 20px;
+
+	width: 30px;
+	height: 30px;
+
+	border: none;
+	background-color: white;
+
+	cursor: pointer;
+
+}
+
+#modalBack{
+	position: absolute;
+	top: 20px;
+	left: 20px;
+
+	width: 30px;
+	height: 30px;
+
+	border: none;
+	background-color: white;
+
+	cursor: pointer;
+}
+
+.modalClose:hover{
+	font-weight: bolder;
+	color: red;
+}
+
+#modalH4{
+	font-size: 30px;
+	margin: 60px 0 0 0;
+}
+
+#modalWorks{
+	display: flex;
+	flex-wrap:wrap;
+	justify-content:flex-start;
+	gap: 10px;
+	row-gap:30px;
+
+	margin: 45px 90px 0;
+	padding-bottom: 75px;
+	border-bottom: solid #B3B3B3 1px;
+}
+
+#modalWorks article{
+	position: relative;
+}
+
+.modalImg{
+	width: 80px;
+}
+
+.modalImgSuppr{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+
+	width: 20px;
+	height: 20px;
+	
+	background-color: black;
+	border: none;
+	border-radius: 2px;
+	color: white;
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#modalAddPhoto{
+	width: 40%;
+	margin: 45px 0 ;
+	padding: 10px 0;
+	border-radius: 30px;
+	border: solid #1D6154 1px;
+	font-family: 'Syne';
+	cursor: pointer;
+	background-color: #1D6154;
+	color: white;
+}
+
+#modalContentAddPhoto form{
+	width: 100%;
+}
+
+#modalFormDiv{
+	display: flex;
+	flex-direction: column;
+	margin: 30px 90px 45px;
+}
+
+#divInputFile{
+	background-color: #E8F1F6;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	padding: 10px;
+	border-radius: 5px;
+	margin-bottom: 30px;
+}
+
+#divInputFile i{
+	font-size: 5em;
+	color: #CBD6DC;
+}
+
+#divInputFile img{
+	width: 150px;
+}
+
+#divPreview{
+	display: flex;
+	justify-content: center;
+}
+
+.labelInputFile{
+	border: none;
+	background-color:#CBD6DC;
+	padding: 5px 30px;
+	border-radius: 30px;
+	color: #306685;
+	margin-bottom: 10px;
+}
+
+#modalFormDiv input[type="file"]{
+	display: none;
+}
+
+#modalFormDiv input{
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	height: 50px;
+	margin-bottom: 30px;
+}
+
+#modalFormDiv select{
+	height: 50px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#modalFormDivLine{
+	margin-top: 45px;
+	border-bottom: solid #B3B3B3 1px;
+}
+
+#modalButtonValider{
+	width: 40%;
+	margin: 45px 30% 0;
+	padding: 10px 0;
+	border-radius: 30px;
+	border: solid #A7A7A7 1px;
+	font-family: 'Syne';
+	cursor: pointer;
+	background-color: #1D6154;
+	color: white;
+}
+
+#modalButtonValider:disabled{
+	background-color: #A7A7A7;
+}
+
+#headerEdit{
+	width: 100%;
+	background-color: black;
+	color: white;
+	text-align: center;
+	padding: 10px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+#portfolioH2{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 90px;
+	margin-bottom: 60px;
+	gap: 20px;
+	padding-left: 70px;
+}
+
+#showModalEdit{
+	border: none;
+	background-color: white;
+	cursor: pointer;
+}
+
+#navLogout{
+	display: none;
+}
+
+#modalFormError{
+	border-bottom: solid #A7A7A7 1px;
+	margin-top: 75px;
+	padding-bottom: 10px;
+}
+
+.modalFormError{
+	color: red;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.modalFormValid{
+	color: green;
+	text-align: center;
+	margin-top: 20px;
 }
 

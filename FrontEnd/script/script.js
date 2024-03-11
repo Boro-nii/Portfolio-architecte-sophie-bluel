@@ -1,71 +1,142 @@
-const reponse = await fetch('http://localhost:5678/api/works');
-let works = await reponse.json();
+import * as modal from "./modal.js";
+import * as work from "./work.js";
+import * as gallery from "./gallery.js"
 
-//fonction asynchrone pour récupérer tous les travaux
-async function getWorks(){
-    const reponse = await fetch("http://localhost:5678/api/works");
-    const works = await reponse.json();
-    return works;
-}
+let works = await work.getWorks()
 
-//Créer la gallerie a partir de l'API 
-function createGallery(idFiltre){  
-    //on recupère dans le DOM la div avec la class "gallery"
-    const gallery = document.querySelector(".gallery");
-    //on vide la galerie
-    gallery.innerHTML = "";
-    //on parcour les travaux de l'API, pour chaque travail :
-    for(let i=0; i<works.length; i++){
-        //si idFiltre == "tous" on affiche tous les travaux
-        if(idFiltre=="tous"){
-            let figure = document.createElement("figure");
-            let img = document.createElement("img");
-            let figcaption = document.createElement("figcaption");
-            //on leur applique les bons attributs
-            img.setAttribute("src", works[i].imageUrl);
-            img.setAttribute("alt", works[i].title);
-            figcaption.innerText = works[i].title;
-
-            figure.appendChild(img);
-            figure.appendChild(figcaption);
-            gallery.appendChild(figure);
-            //si id != "tous" on affiche que les travaux avec le bon "id"
-        }else if(idFiltre==works[i].category.id){
-            let figure = document.createElement("figure");
-            let img = document.createElement("img");
-            let figcaption = document.createElement("figcaption");
-            //on leur applique les bons attributs
-            img.setAttribute("src", works[i].imageUrl);
-            img.setAttribute("alt", works[i].title);
-            figcaption.innerText = works[i].title;
-
-            figure.appendChild(img);
-            figure.appendChild(figcaption);
-            gallery.appendChild(figure);
-        }
+function isLogged(){
+    if(window.localStorage.getItem("token")!==null){
+        // On efface le bouton login et on affiche le bouton logout
+        let navLogin = document.getElementById("navLogin")
+        let navLogout = document.getElementById("navLogout")
+        navLogin.style.display="none"
+        navLogout.style.display="block"
+        // On affiche la marge noire en haut
+        let headerEdit = document.getElementById("headerEdit")
+        headerEdit.style.display="inline"
+        // On fait disparaitre les filtres
+        const divFiltres = document.getElementById("filtres")
+        divFiltres.style.display="none"
+        // On affiche le bouton "modifier"
+        showModalEdit.style.display="inline"
     }
 }
 
 function createFilter(){
     //on récupère tous les boutons de la div "filtres"
-    const filtres = document.querySelectorAll("#filtres button")
+    const filtres = document.querySelectorAll(".filtresButton")
     //on parcours tous les boutons
-    filtres.forEach(element => {
-        console.log(element)
+    filtres.forEach(button => {
         //on créer un evenement au clic
-        element.addEventListener("click", ()=>{
-            //on recréer la galerie avec l'id de la catégorie a filtrer (tous, 1, 2, 3)
-            createGallery(element.id)
+        button.addEventListener("click", ()=>{
+            //on recréer la galerie avec l'id de la catégorie a filtrer (null, 1, 2, 3)
+            gallery.filterWorks(button.id, works)
             //on reparcourt tous les boutons pour retirer la classe "inUse"
             filtres.forEach(classe => {
                 classe.classList.remove("inUse")
             })
             //on ajoute la classe inUse au filtre "actuel"
-            element.classList.toggle("inUse")
+            button.classList.toggle("inUse")
         })
     });
-    console.log(filtres)
 }
 
-createGallery("tous");
+async function modalRefresh(){
+    works = await work.getWorks()
+
+    gallery.renderGallery(works);
+    modal.createGalleryEdit(works);
+
+    let modalImgSuppr = document.querySelectorAll(".modalImgSuppr");
+    modalImgSuppr.forEach(button => button.addEventListener("click", async ()=>{
+        await work.deleteWork(button.id);
+        modalRefresh()
+    }))
+}
+
+//GESTION DES BOUTONS :
+
+modal.createGalleryEdit(works);
+
+const showModalEdit = document.getElementById("showModalEdit");
+showModalEdit.addEventListener("click",()=>{
+    modal.openModal();
+})
+
+const modalClose = document.querySelectorAll(".modalClose");
+modalClose.forEach(button => {
+    button.addEventListener("click",()=>{
+        modal.closeModal();
+    })
+})
+
+const modalAddPhoto = document.getElementById("modalAddPhoto");
+modalAddPhoto.addEventListener("click",()=>{
+    modal.openAddPhoto();
+
+    document.getElementById("modalForm").reset();
+    modal.erasePreview()
+    const modalFormError = document.getElementById("modalFormError")
+    modalFormError.innerHTML = ""
+})
+
+const modalBack = document.getElementById("modalBack");
+modalBack.addEventListener("click",()=>{
+    modal.openModal();
+})
+
+const modalButtonValider = document.getElementById("modalButtonValider");
+modalButtonValider.addEventListener("click", async (event)=>{
+    event.preventDefault();
+    await work.addWork();
+
+
+    document.getElementById("modalForm").reset();
+    modal.erasePreview()
+    await modalRefresh()
+    modal.formIsOk()
+})
+
+const modalImgSuppr = document.querySelectorAll(".modalImgSuppr");
+modalImgSuppr.forEach(button => button.addEventListener("click", async (event)=>{
+    event.preventDefault();
+    await work.deleteWork(button.id);
+    await modalRefresh()
+}))
+
+const navLogout = document.getElementById("navLogout");
+navLogout.addEventListener("click",(event)=>{
+    event.preventDefault;
+    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("userId");
+})
+
+const titre = document.getElementById("titre");
+titre.addEventListener("input",()=>{
+    modal.formIsOk();
+})
+
+const photo = document.getElementById("photo");
+photo.addEventListener("change",()=>{
+    modal.formIsOk();
+    modal.createPreview();
+})
+
+const modalStopPropa = document.querySelectorAll(".js-modalStopPropa");
+modalStopPropa.forEach( div =>
+    div.addEventListener("click",(event)=>{
+        event.stopPropagation();
+    })
+)
+
+const modalBG = document.getElementById("modal");
+modalBG.addEventListener("click",(event)=>{
+    modal.closeModal();
+})
+
+
+
+//INITIALISATION
+gallery.renderGallery(works);
 createFilter();
+isLogged()
