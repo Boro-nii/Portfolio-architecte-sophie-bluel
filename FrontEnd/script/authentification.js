@@ -1,3 +1,4 @@
+//on vide le local storage
 window.localStorage.removeItem("token")
 window.localStorage.removeItem("userId")
 
@@ -23,12 +24,18 @@ buttonSubmit.addEventListener("click",async (event)=>{
         headers: { "Content-Type": "application/json" },
         body: chargeUtile
     });
-
+    //si la requete renvoi un message d'erreur : 
+    //401 not authorized, 404 user not found
     if(reponse.status==404 || reponse.status==401){
+        //on recupère l'element du DOM pour afficher une erreur
         let messageErreur = document.getElementById("messageErreur")
         messageErreur.innerText = "Mail ou Mot de passe incorrect"
     }
+    //si la requete renvoi un status 200 "connected"
     if(reponse.status==200){
+        //on transforme la reponse en "objet json"
+        //on extrait le token qu'on place dans le local storage
+        //on redirgie l'utilisateur vers index.html
         let data = await reponse.json()
         window.localStorage.setItem("userId",data.userId)
         window.localStorage.setItem("token",data.token)
