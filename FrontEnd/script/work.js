@@ -11,7 +11,7 @@ export async function deleteWork(workId){
     try{
         //requete fetch en delete sur /works/id
         //Authorization: `Bearer ${window.localStorage.getItem("token")}` : on recupère le token dans le local storage pour générer une autorisation
-        const reponse = await fetch(`http://localhost:5678/api/works/${workId}`,
+        await fetch(`http://localhost:5678/api/works/${workId}`,
         {
             method: "DELETE",
             headers: {
@@ -57,6 +57,10 @@ export async function addWork(){
             modalFormError.innerText ="Le projet a bien été enregistré"
             modalFormError.classList.remove("modalFormError")
             modalFormError.classList.add("modalFormValid")
+            
+            //Création d'un objet a retourner pour mettre a jour l'affichage
+            let reponseData = await reponse.json()
+            return reponseData
         }
 
     }catch (error){

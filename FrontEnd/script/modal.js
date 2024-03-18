@@ -36,14 +36,13 @@ export function createGalleryEdit(works){
     //on place l'id du travail sur le bouton pour pouvoir appeler la fonction deleteWork plus tard
     works.forEach(function(work){
         let article = 
-        `<article>
+        `<article data-id="${work.id}">
             <img class="modalImg" src="${work.imageUrl}" alt="${work.title}">
             <button class="modalImgSuppr" id="${work.id}"><i class="fa-solid fa-trash-can"></i></button>
         </article>`
         modalWorks.innerHTML += article
     })
 }
-
 
 //fonction pour afficher l'image "load" dans le formulaire
 export function createPreview(){

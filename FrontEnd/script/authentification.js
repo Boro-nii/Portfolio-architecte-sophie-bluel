@@ -37,7 +37,6 @@ buttonSubmit.addEventListener("click",async (event)=>{
         //on extrait le token qu'on place dans le local storage
         //on redirgie l'utilisateur vers index.html
         let data = await reponse.json()
-        window.localStorage.setItem("userId",data.userId)
         window.localStorage.setItem("token",data.token)
         window.location.href="index.html"
     }

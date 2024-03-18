@@ -39,26 +39,11 @@ function createFilter(){
                 classe.classList.remove("inUse")
             })
             //on ajoute la classe inUse au filtre "actuel"
-            button.classList.toggle("inUse")
+            button.classList.add("inUse")
         })
     });
 }
 
-//mis a jour des galeries après l'ajout ou la suppression d'une photo
-async function modalRefresh(){
-    //on met a jour le tableau works a partir de l'API
-    works = await work.getWorks()
-    //on met a jour la galerie et la galerie d'edition 
-    gallery.renderGallery(works);
-    modal.createGalleryEdit(works);
-    //on recupère les nouveaux boutons de suppression dans la galerie d'édition
-    let modalImgSuppr = document.querySelectorAll(".modalImgSuppr");
-    //pour chaque bouton on créer un event au click
-    modalImgSuppr.forEach(button => button.addEventListener("click", async ()=>{
-        await work.deleteWork(button.id);
-        modalRefresh()
-    }))
-}
 
 //GESTION DES BOUTONS :
 
@@ -92,30 +77,39 @@ const modalBack = document.getElementById("modalBack");
 modalBack.addEventListener("click",()=>{
     modal.openModal();
 })
+
 //ajout du listener pour ajouter une photo dans l'API
 const modalButtonValider = document.getElementById("modalButtonValider");
 modalButtonValider.addEventListener("click", async (event)=>{
     //on inhibe le comportement par defaut du bouton de validation
     event.preventDefault();
     //on créer une nouvelle photo dans l'API a partir du formulaire
-    await work.addWork();
-
+    //work.addwork() renvoi la reponse de la requete (id, imageUrl, title...)
+    let newWork = await work.addWork();
+    //ajout du visuel de la nouvelle photo
+    gallery.addGalleryElement(newWork.id, newWork.imageUrl, newWork.title);
+    //ajout listener de suppression dans la galerie d'édition
+    addListenerModalImgSuppr()
     //on reset le formulaire, efface la preview et on met a jour les galeries
     document.getElementById("modalForm").reset();
     modal.erasePreview()
-    await modalRefresh()
     //appel de formIsOk() pour disabled le bouton de validation
     modal.formIsOk()
+
 })
+
+function addListenerModalImgSuppr(){
 //recupération des boutons de supression de la galerie d'editon et ajour d'un listener pour supprimer les photos
-const modalImgSuppr = document.querySelectorAll(".modalImgSuppr");
-modalImgSuppr.forEach(button => button.addEventListener("click", async (event)=>{
-    //event.preventDefault();
+let modalImgSuppr = document.querySelectorAll(".modalImgSuppr");
+modalImgSuppr.forEach(button => button.addEventListener("click", async ()=>{
     //suppression d'une photo a partir de son id (l'id de la photo est placé sur le bouton lors de la creation de la galerie)
-    await work.deleteWork(button.id);
+    let id = button.id
+    await work.deleteWork(id);
     //mis a jour de l'affichage
-    await modalRefresh()
+    gallery.deleteGalleryElement(id);
 }))
+}
+
 //listener pour vider le localStorage lors du clic sur "log out" 
 const navLogout = document.getElementById("navLogout");
 navLogout.addEventListener("click",(event)=>{
@@ -153,4 +147,6 @@ gallery.renderGallery(works);
 //cration des filtres
 createFilter();
 //est ce que l'utilisateur est connecté, si oui modification des elements "connecté"
-isLogged()
+isLogged();
+//creation des listener de la modalEdition
+addListenerModalImgSuppr();
