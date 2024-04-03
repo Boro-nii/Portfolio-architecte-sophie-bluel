@@ -2,7 +2,6 @@
 const modalBG = document.querySelector(".modalBG")
 const modalContentGallery = document.getElementById("modalContentGallery")
 const modalContentAddPhoto = document.getElementById("modalContentAddPhoto")
-const modalWorks = document.getElementById("modalWorks")
 
 //fonction pour afficher la fenetre modale "galerie photo"
 export function openModal(){
@@ -27,24 +26,8 @@ export function closeModal(){
     modalContentAddPhoto.style.display = "none"
 }
 
-//fonction pour afficher la galerie dans la modale "galerie photo" a partir d'un tableau
-export function createGalleryEdit(works){
-    //on vide la galerie de la modale
-    modalWorks.innerHTML = "";
-    //on parcour les travaux de "works" 
-    //pour chaque travail on créer un article avec l'image du travail et un button
-    //on place l'id du travail sur le bouton pour pouvoir appeler la fonction deleteWork plus tard
-    works.forEach(function(work){
-        let article = 
-        `<article data-id="${work.id}">
-            <img class="modalImg" src="${work.imageUrl}" alt="${work.title}">
-            <button class="modalImgSuppr" id="${work.id}"><i class="fa-solid fa-trash-can"></i></button>
-        </article>`
-        modalWorks.innerHTML += article
-    })
-}
 
-//fonction pour afficher l'image "load" dans le formulaire
+//fonction pour afficher l'image chargé dans le formulaire
 export function createPreview(){
     //on recupère l'image chargé dans le formulaire
     let img = document.getElementById("photo").files[0];
@@ -86,7 +69,7 @@ export function erasePreview(){
     divInputFile.style.padding = "10px"
 }
 
-//fonction qui verifie que le formulaire est rempli
+//fonction qui verifie que le formulaire est bien rempli
 export function formIsOk(){
     //on recupère le dom du bouton de validation
     let modalButtonValider = document.getElementById("modalButtonValider");
