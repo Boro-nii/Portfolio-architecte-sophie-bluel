@@ -1,3 +1,6 @@
+import * as modalJS from "./modal.js";
+import * as galleryJS from "./gallery.js";
+
 //requete fetch pour recupérer les travaux de l'API, les transformer en objet json et retourner le tableau
 export async function getWorks(){
     let reponse = await fetch("http://localhost:5678/api/works");
@@ -35,15 +38,18 @@ export async function addWork(){
         let img = document.getElementById("photo").files[0]
         let title = document.getElementById("titre").value 
         let category = document.getElementById("categorie").value
+
         //on verifie que la taille de l'image soit <4Mo, sinon on throw une erreur
         if(img.size > 4000000){
             throw new Error("L'image est trop volumineuse (4Mo max)")
         }
+
         //on créer un element "formData" a partir des valeurs des inputs
         let formData = new FormData()
         formData.append("image",img)
         formData.append("title",title)
         formData.append("category",category)
+
         //on créer une requete fetch en POST avec le token bearer et l'objet formData sur /works
         const reponse = await fetch("http://localhost:5678/api/works/",{
             method: "POST",
@@ -52,6 +58,7 @@ export async function addWork(){
             },
             body: formData,
         })
+        
         //si requete renvoi un status 201, on affiche "Le projet a bien été enregistré" et on change la class css pour afficher le text en vert
         if(reponse.status===201){
             modalFormError.innerText ="Le projet a bien été enregistré"
@@ -59,8 +66,16 @@ export async function addWork(){
             modalFormError.classList.add("modalFormValid")
             
             //Création d'un objet a retourner pour mettre a jour l'affichage
-            let reponseData = await reponse.json()
-            return reponseData
+            let newWork = await reponse.json()
+
+            //ajout du visuel de la nouvelle photo
+            galleryJS.addGalleryElement(newWork);
+            galleryJS.createGalleryEditElement(newWork);
+            //on reset le formulaire, efface la preview
+            document.getElementById("modalForm").reset();
+            modalJS.erasePreview()
+            //appel de formIsOk() pour disabled le bouton de validation
+            modalJS.formIsOk()
         }
 
     }catch (error){

@@ -16,6 +16,12 @@ export function openAddPhoto(){
 
     modalContentGallery.style.display = "none"
     modalContentAddPhoto.style.display = "flex"
+
+    //reset du formulaire, "effacement du preview" et effacement du message d'erreur
+    document.getElementById("modalForm").reset();
+    erasePreview()
+    const modalFormError = document.getElementById("modalFormError")
+    modalFormError.innerHTML = ""
 }
 
 //fonction pour cacher toutes les fenetres modales

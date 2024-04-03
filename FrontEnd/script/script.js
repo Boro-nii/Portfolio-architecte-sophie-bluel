@@ -71,11 +71,6 @@ const modalAddPhoto = document.getElementById("modalAddPhoto");
 modalAddPhoto.addEventListener("click",()=>{
     //afficher la modale "ajout photo"
     modal.openAddPhoto();
-    //reset du formulaire, "effacement du preview" et effacement du message d'erreur
-    document.getElementById("modalForm").reset();
-    modal.erasePreview()
-    const modalFormError = document.getElementById("modalFormError")
-    modalFormError.innerHTML = ""
 })
 //ajout du listener pour retourner sur la modale "galerie photo" depuis "ajout photo"
 const modalBack = document.getElementById("modalBack");
@@ -107,16 +102,7 @@ modalButtonValider.addEventListener("click", async (event)=>{
     //on inhibe le comportement par defaut du bouton de validation
     event.preventDefault();
     //on créer une nouvelle photo dans l'API a partir du formulaire
-    //work.addwork() renvoi la reponse de la requete (id, imageUrl, title...)
-    let newWork = await work.addWork();
-    //ajout du visuel de la nouvelle photo
-    gallery.addGalleryElement(newWork);
-    gallery.createGalleryEditElement(newWork);
-    //on reset le formulaire, efface la preview et on met a jour les galeries
-    document.getElementById("modalForm").reset();
-    modal.erasePreview()
-    //appel de formIsOk() pour disabled le bouton de validation
-    modal.formIsOk()
+    await work.addWork();
 })
 
 
